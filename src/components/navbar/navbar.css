@@ -1,8 +1,16 @@
+.body-navbar{
+  background-color: transparent;
+  
+}
+
 .body-header{
-  padding: 0px 40px;
+  padding: 0px 50px;
+  background-color: transparent;
 }
 
 .logo{
-  max-width: 250px;
+  max-width: 210px;
 }
+
+
 
