@@ -1,6 +1,7 @@
 import React from 'react';
 import '../navbar/navbar.css';
 import icon from "../../images/home/vet-icon.png"
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
@@ -15,11 +16,12 @@ function Navbar() {
           <li><a href="#" className="nav-link px-2 link-dark">Contacto</a></li>
         </ul>
         <div className="col-md-3 text-end">
-          <button type="button" className="btn btn-outline-primary me-2">Login</button>
+          <Link to="/login">
+            <button type="button" className="btn btn-outline-primary">Login</button>
+          </Link>
         </div>
-      </header>
-    </div>
+      </header >
+    </div >
   );
 }
-
 export default Navbar;
