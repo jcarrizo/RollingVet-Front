@@ -1,6 +1,5 @@
 .body-navbar{
   background-color: transparent;
-  
 }
 
 .body-header{
@@ -12,5 +11,14 @@
   max-width: 210px;
 }
 
+.btn-outline-primary {
+  color: var(--text-color);
+  border-color:  var(--text-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--text-color);
+  border-color:  var(--text-color);
+}
 
 
