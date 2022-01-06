@@ -8,6 +8,10 @@
   overflow: hidden;
   }
 
+  .pointerSidebar {
+    cursor: pointer;
+  }
+
   .navigation ul{
     position: absolute;
     top: 0;

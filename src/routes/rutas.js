@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Contact from '../pages/contact/contact';
 import Estadisticas from '../pages/dashboard/estadisticas/estadisticas';
+import RegistroUser from '../pages/dashboard/registroUser/registroUser';
 import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 
@@ -20,6 +21,8 @@ const Rutas = () => {
         <Route path="/Contacto" element={<Contact />}>
         </Route>
         <Route path="/estadisticas" element={<Estadisticas />}>
+        </Route>
+        <Route path="/usuarios" element={<RegistroUser />}>
         </Route>
       </Routes>
     </BrowserRouter>

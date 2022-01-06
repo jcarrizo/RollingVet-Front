@@ -4,6 +4,7 @@ import icon from "../../images/home/vet-icon.png"
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+
   return (
     <div className="body-navbar">
       <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 border-bottom body-header">
