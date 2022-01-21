@@ -5,10 +5,17 @@ import '../sidebar/sidebar.css'
 
 const Sidebar = () => {
 
+  let classActiveMenu = ''
+
   let userName = localStorage.getItem('UserName');;
   if (userName == "" || userName == undefined) {
     userName = "User Name"
   }
+
+  if (false) {
+    classActiveMenu += 'active'
+  }
+
 
   const LogOut = () => {
     localStorage.setItem('UserName', '');
@@ -29,7 +36,7 @@ const Sidebar = () => {
             }
           </a>
         </li>
-        <li className='active'>
+        <li className={classActiveMenu}>
           <Link to='/estadisticas'>
             <a className='pointerSidebar'>
               <span className="icon">
@@ -39,7 +46,7 @@ const Sidebar = () => {
             </a>
           </Link>
         </li>
-        <li>
+        <li className='usuariosLi'>
           <Link to='/usuarios'>
             <a className='pointerSidebar'>
               <span className="icon">
