@@ -8,7 +8,7 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     console.log(data)
-    fetch('http://localhost:8000/api/login', {
+    fetch('http://localhost:8000/api/user/login', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -20,7 +20,7 @@ const Login = () => {
       .then(data => {
         console.log(data)
         if (data.length !== 0) {
-          localStorage.setItem('UserName', data[0].email);
+          localStorage.setItem('UserName', data[0].userName);
           window.history.pushState({}, undefined, "/estadisticas")
           window.location.reload();
         }
