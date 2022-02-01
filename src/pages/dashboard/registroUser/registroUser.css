@@ -13,7 +13,6 @@
   padding: 20px 30px;
   border-radius: 20px;
   display: flex;
-  cursor: pointer;
   box-shadow: 0 7px 25px rgba(0,0,0,0.08);
   flex-direction: row;
   flex-direction: column;
@@ -38,13 +37,13 @@
 }
 
 .cardBoxtwo .card:hover{
-  background: var(--blue);
+  background: none;
 }
 
 
 .cardBoxtwo .card:hover .numbers,
 .cardBoxtwo .card:hover .cardName,
 .cardBoxtwo .card:hover .iconBx{
-  color: var(--white);
+  color: var(--blue);
 }
 
