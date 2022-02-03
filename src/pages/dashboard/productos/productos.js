@@ -169,13 +169,77 @@ const Productos = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-3">
                     <label htmlFor="InputNameUsuario" className="form-label">
-                      Nombre de la Categoria
+                      Nombre de el Producto
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="InputNameUsuario"
                       maxLength={30}
+                      {...register("categoryName", { required: true })}
+                      required
+                    ></input>
+                  </div>
+                  <div>
+                    <label className="form-label">Categoria</label>
+                    <select
+                      className="form-select mb-4"
+                      aria-label="Default select example"
+                      {...register("estado", { required: true })}
+                      required
+                    >
+                      <option value="Vendedor">Vendedor</option>
+                      <option value="Administrador">Administrador</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="InputNameUsuario" className="form-label">
+                      Codigo
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="InputNameUsuario"
+                      maxLength={30}
+                      {...register("categoryName", { required: true })}
+                      required
+                    ></input>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="InputNameUsuario" className="form-label">
+                      Precio Venta
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="InputNameUsuario"
+                      min={0}
+                      {...register("categoryName", { required: true })}
+                      required
+                    ></input>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="InputNameUsuario" className="form-label">
+                      Precio Compra
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="InputNameUsuario"
+                      min={0}
+                      {...register("categoryName", { required: true })}
+                      required
+                    ></input>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="InputNameUsuario" className="form-label">
+                      Stock
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="InputNameUsuario"
+                      min={0}
                       {...register("categoryName", { required: true })}
                       required
                     ></input>
@@ -193,16 +257,8 @@ const Productos = () => {
                       rows="3"
                     ></textarea>
                   </div>
-                  <label className="form-label">Estado</label>
-                  <select
-                    className="form-select mb-4"
-                    aria-label="Default select example"
-                    {...register("estado", { required: true })}
-                    required
-                  >
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Administrador">Administrador</option>
-                  </select>
+
+
                   <button type="submit" className="btn btn-primary">
                     Guardar
                   </button>
@@ -246,8 +302,8 @@ const Productos = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 export default Productos;
