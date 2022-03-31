@@ -1,10 +1,10 @@
 import React from 'react'
-import '../login/login.css'
+import '../register/register.css'
 import Logo from '../../images/vet-icon.png'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
-const Login = () => {
+const Register = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     console.log(data)
@@ -32,26 +32,26 @@ const Login = () => {
   };
 
   const Redireccion = () => {
-    window.history.pushState({}, undefined, "/register");
+    window.history.pushState({}, undefined, "/");
   }
 
 
   return (
-    <div className="main">
+    <div className="mainRegister">
       <Link to="/">
         <img className='logo-login d-flex align-items-center' src={Logo}></img>
       </Link>
       <form className="form1" onSubmit={handleSubmit(onSubmit)}>
         <input className="un " type="text" align="center" placeholder="Correo" maxLength={30} {...register("email", { required: true })} required></input>
         <input className="pass" type="password" align="center" placeholder="Contraseña" maxLength={30} {...register("password", { required: true })} required></input>
+        <input className="pass" type="password" align="center" placeholder="Contraseña" maxLength={30} {...register("Confirmpassword", { required: true })} required></input>
         <button className="submit" type='submit'>Ingresar</button>
       </form >
       <div className="d-flex justify-content-center pt-4">
-        <a href='' onClick={() => { Redireccion() }}>¿No posees una cuenta? Ingresa aqui</a>
+        <a href='' onClick={() => { Redireccion() }}>¿Ya tienes una cuenta? Ingresa aqui</a>
       </div>
-
     </div>
   )
 }
 
-export default Login;
+export default Register;
