@@ -21,7 +21,7 @@ const Login = () => {
         console.log(data)
         if (data.length !== 0) {
           localStorage.setItem('UserName', data[0].userName);
-          window.history.pushState({}, undefined, "/estadisticas")
+          window.history.pushState({}, undefined, "/usuarios")
           window.location.reload();
         }
         else {
