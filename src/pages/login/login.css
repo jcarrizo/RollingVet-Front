@@ -81,6 +81,13 @@ text-align: center;
   background: linear-gradient(to right, #aa6c1b, #ad6302);
 }
 
+.textLink{
+  color: #404b6d;
+}
+.textLink:hover{
+  color: #ac6b17;
+}
+
 @media (max-width: 600px) {
   .main {
     border-radius: 1.5em;

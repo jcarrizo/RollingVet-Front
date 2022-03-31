@@ -31,8 +31,8 @@ const Sidebar = () => {
             {<span className="title">{userName}</span>}
           </a>
         </li>
-        <li className="usuariosLi">
-          <Link to="/usuarios">
+        <li className="usuariosLi" >
+          <Link to="/user">
             <a className="pointerSidebar">
               <span className="icon">
                 <ion-icon name="person-add-outline"></ion-icon>
