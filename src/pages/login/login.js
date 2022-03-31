@@ -1,6 +1,6 @@
 import React from 'react'
 import '../login/login.css'
-import Logo from '../../images/home/vet-icon.png'
+import Logo from '../../images/vet-icon.png'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
