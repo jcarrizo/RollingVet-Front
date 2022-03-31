@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 const Login = () => {
+
   const { register, handleSubmit } = useForm();
   const onSubmit = dataLogin => {
     // console.log(data)
@@ -41,7 +42,6 @@ const Login = () => {
     window.history.pushState({}, undefined, "/register");
   }
 
-
   return (
     <div className="main">
       <Link to="/">
@@ -59,5 +59,4 @@ const Login = () => {
     </div>
   )
 }
-
 export default Login;
