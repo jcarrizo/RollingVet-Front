@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Sidebar from "../../../components/sidebar/sidebar";
 import "../registroUser/registroUser.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Patients = () => {
   const { register, handleSubmit } = useForm();
   const [datosUsuarios, setdatosUsuarios] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     ObtenerUsuarios();
@@ -73,6 +76,8 @@ const Patients = () => {
         .catch((err) => console.error(err));
     }
   };
+
+
   return (
     <div>
       <Sidebar />
@@ -89,7 +94,20 @@ const Patients = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-3">
                     <label htmlFor="InputNameUsuario" className="form-label">
-                      Nombre de Usuario
+                      Nombre del Paciente Animal
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="InputNameUsuario"
+                      maxLength={30}
+                      {...register("userName", { required: true })}
+                      required
+                    ></input>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="InputNameUsuario" className="form-label">
+                      Nombre del Dueño
                     </label>
                     <input
                       type="text"
@@ -102,7 +120,7 @@ const Patients = () => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
-                      Email
+                      Especie
                     </label>
                     <input
                       type="email"
@@ -116,7 +134,7 @@ const Patients = () => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="InputPassword1" className="form-label">
-                      Contraseña
+                      Raza
                     </label>
                     <input
                       type="password"
@@ -127,16 +145,12 @@ const Patients = () => {
                       required
                     ></input>
                   </div>
-                  <label className="form-label">Rango del Perfil</label>
-                  <select
-                    className="form-select mb-4"
-                    aria-label="Default select example"
-                    {...register("typeProfile", { required: true })}
-                    required
-                  >
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Administrador">Administrador</option>
-                  </select>
+                  <div className="mb-3">
+                    <label htmlFor="InputPassword1" className="form-label">
+                      Fecha del Turno
+                    </label>
+                    <DatePicker showTimeSelect selected={startDate} onChange={(date) => setStartDate(date)} />
+                  </div>
                   <button type="submit" className="btn btn-primary">
                     Guardar
                   </button>
@@ -146,7 +160,7 @@ const Patients = () => {
           </div>
           <div className="card">
             <div>
-              <h1 className="numbers mb-4">Lista de Pacientes</h1>
+              <h1 className="numbers mb-4">Lista de los Turnos</h1>
               <table className="table">
                 <thead>
                   <tr>
@@ -163,15 +177,19 @@ const Patients = () => {
                         <td>{datos.userName}</td>
                         <td>{datos.email}</td>
                         <td>{datos.typeProfile}</td>
-                        <button
-                          type="button"
-                          className="btn btn-outline-danger mb-3"
-                          onClick={() => {
-                            EliminarUsuario(datos._id);
-                          }}
-                        >
-                          Eliminar
-                        </button>
+                        <div className="d-flex align-items-center">
+                          <button type="button" class="btn btn-warning me-2">Editar</button>
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => {
+                              EliminarUsuario(datos._id);
+                            }}
+                          >
+                            Eliminar
+                          </button>
+
+                        </div>
                       </tr>
                     );
                   })}

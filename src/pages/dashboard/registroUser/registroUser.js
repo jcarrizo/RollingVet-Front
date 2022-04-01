@@ -142,7 +142,6 @@ const RegistroUser = () => {
                   <tr>
                     <th scope="col">Usuario</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Rango</th>
                   </tr>
                 </thead>
                 <tbody className="">
@@ -152,7 +151,6 @@ const RegistroUser = () => {
                       <tr>
                         <td>{datos.userName}</td>
                         <td>{datos.email}</td>
-                        <td>{datos.typeProfile}</td>
                         <button
                           type="button"
                           className="btn btn-outline-danger mb-3"
