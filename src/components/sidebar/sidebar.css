@@ -136,4 +136,9 @@
       box-shadow: 35px -35px 0 10px var(--white);
       pointer-events: none;
       }
+
+      .ImgLogo{
+        margin-top: 30px;
+        width: 90% !important;
+      }
     

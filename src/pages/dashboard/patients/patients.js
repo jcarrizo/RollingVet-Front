@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Sidebar from "../../../components/sidebar/sidebar";
 import "../registroUser/registroUser.css";
 
-const RegistroUser = () => {
+const Patients = () => {
   const { register, handleSubmit } = useForm();
   const [datosUsuarios, setdatosUsuarios] = useState([]);
 
@@ -78,13 +78,13 @@ const RegistroUser = () => {
       <Sidebar />
       <div className="maindash">
         <div className="iconPage d-flex align-items-center mt-4 ms-4">
-          <ion-icon className="mt-2" name="person-outline"></ion-icon>
-          <h1 className="mt-2 ms-2">Usuarios</h1>
+          <ion-icon className="mt-2" name="paw-outline"></ion-icon>
+          <h1 className="mt-2 ms-2">Pacientes</h1>
         </div>
         <div className="cardBoxtwo">
           <div className="card">
             <div>
-              <div className="numbers mb-4">Nuevo Usuario</div>
+              <div className="numbers mb-4">Nuevo Paciente</div>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-3">
@@ -127,6 +127,16 @@ const RegistroUser = () => {
                       required
                     ></input>
                   </div>
+                  <label className="form-label">Rango del Perfil</label>
+                  <select
+                    className="form-select mb-4"
+                    aria-label="Default select example"
+                    {...register("typeProfile", { required: true })}
+                    required
+                  >
+                    <option value="Vendedor">Vendedor</option>
+                    <option value="Administrador">Administrador</option>
+                  </select>
                   <button type="submit" className="btn btn-primary">
                     Guardar
                   </button>
@@ -136,7 +146,7 @@ const RegistroUser = () => {
           </div>
           <div className="card">
             <div>
-              <h1 className="numbers mb-4">Lista de Usuarios</h1>
+              <h1 className="numbers mb-4">Lista de Pacientes</h1>
               <table className="table">
                 <thead>
                   <tr>
@@ -169,43 +179,9 @@ const RegistroUser = () => {
               </table>
             </div>
           </div>
-          <div className="card">
-            <div>
-              <h1 className="numbers mb-4">Perfil de Usuario Seleccionado</h1>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
 };
-export default RegistroUser;
+export default Patients;

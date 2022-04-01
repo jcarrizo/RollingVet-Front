@@ -17,6 +17,9 @@
     padding: 0 10px;
   }
 
+  .iconPage{
+ font-size: 35px;
+  }
   .toggle{
     position: relative;
     top: 0;

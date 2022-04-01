@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LogoR from '../../images/vet-icon-remove.png'
 import "../sidebar/sidebar.css";
 
 const Sidebar = () => {
@@ -23,6 +24,7 @@ const Sidebar = () => {
   return (
     <div className="navigation">
       <ul>
+        <img className="ImgLogo" src={LogoR}></img>
         <li>
           <a className="pointerSidebar">
             <span className="icon">
@@ -35,9 +37,19 @@ const Sidebar = () => {
           <Link to="/user">
             <a className="pointerSidebar">
               <span className="icon">
-                <ion-icon name="person-add-outline"></ion-icon>
+                <ion-icon name="person-outline"></ion-icon>
               </span>
               <span className="title">Usuarios</span>
+            </a>
+          </Link>
+        </li>
+        <li className="usuariosLi" >
+          <Link to="/patients">
+            <a className="pointerSidebar">
+              <span className="icon">
+                <ion-icon name="paw-outline"></ion-icon>
+              </span>
+              <span className="title">Pacientes</span>
             </a>
           </Link>
         </li>
@@ -50,7 +62,7 @@ const Sidebar = () => {
             <span className="icon">
               <ion-icon name="log-out-outline"></ion-icon>
             </span>
-            <span className="title">Sign Out</span>
+            <span className="title">Salir</span>
           </a>
         </li>
       </ul>
