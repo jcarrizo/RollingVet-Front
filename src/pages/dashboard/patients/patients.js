@@ -3,20 +3,23 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Sidebar from "../../../components/sidebar/sidebar";
 import "../registroUser/registroUser.css";
+import "../patients/patients.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Patients = () => {
   const { register, handleSubmit } = useForm();
-  const [datosUsuarios, setdatosUsuarios] = useState([]);
+  const [datosPacientes, setdatosPacientes] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
-    ObtenerUsuarios();
+    ObtenerPacientes();
   }, []);
 
   const onSubmit = (data) => {
-    fetch("http://localhost:8000/api/user", {
+    data.dateTime = startDate.toLocaleString();
+    console.log(data)
+    fetch("http://localhost:8000/api/patients", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -30,13 +33,13 @@ const Patients = () => {
           type: "success",
           autoClose: 3000,
         });
-        ObtenerUsuarios();
+        ObtenerPacientes();
       })
       .catch((err) => console.error(err));
   };
 
-  const ObtenerUsuarios = () => {
-    fetch("http://localhost:8000/api/user/allUsers", {
+  const ObtenerPacientes = () => {
+    fetch("http://localhost:8000/api/patients/allPatients", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -45,7 +48,7 @@ const Patients = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setdatosUsuarios(data);
+        setdatosPacientes(data);
       })
       .catch((err) => console.error(err));
   };
@@ -71,7 +74,7 @@ const Patients = () => {
             type: "success",
             autoClose: 3000,
           });
-          ObtenerUsuarios();
+          ObtenerPacientes();
         })
         .catch((err) => console.error(err));
     }
@@ -92,64 +95,35 @@ const Patients = () => {
               <div className="numbers mb-4">Nuevo Paciente</div>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="mb-3">
-                    <label htmlFor="InputNameUsuario" className="form-label">
-                      Nombre del Paciente Animal
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="InputNameUsuario"
-                      maxLength={30}
-                      {...register("userName", { required: true })}
-                      required
-                    ></input>
+                  <div className="form-floating mb-3">
+                    <input type="text" className="form-control" placeholder="Paciente" id="floatingInputPatient" maxLength={30} {...register("patientAnimalName", { required: true })}
+                      required></input>
+                    <label for="floatingInputPatient">Nombre del Paciente Animal</label>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="InputNameUsuario" className="form-label">
-                      Nombre del Dueño
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="InputNameUsuario"
-                      maxLength={30}
-                      {...register("userName", { required: true })}
-                      required
-                    ></input>
+                  <div className="form-floating mb-3">
+                    <input type="text" className="form-control" placeholder="Dueño" id="floatingInputOwner" maxLength={30} {...register("ownerName", { required: true })}
+                      required></input>
+                    <label for="floatingInputOwner">Nombre del Dueño</label>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">
-                      Especie
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      maxLength={30}
-                      {...register("email", { required: true })}
-                      required
-                    ></input>
+                  <div className="form-floating mb-3">
+                    <input type="text" className="form-control" placeholder="Especie" id="floatingInputSpecies" maxLength={30} {...register("species", { required: true })}
+                      required></input>
+                    <label for="floatingInputSpecies">Especie</label>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="InputPassword1" className="form-label">
-                      Raza
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="InputPassword1"
-                      maxLength={30}
-                      {...register("password", { required: true })}
-                      required
-                    ></input>
+                  <div className="form-floating mb-3">
+                    <input type="text" className="form-control" placeholder="Especie" id="floatingInputRace" maxLength={30} {...register("race", { required: true })}
+                      required></input>
+                    <label for="floatingInputRace">Raza</label>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="InputPassword1" className="form-label">
+                  <div className="form-floating mb-3">
+                    <textarea className="form-control TextArea" placeholder="Leave a comment here" id="floatingTextarea" rows="3" {...register("consultation", { required: true })}></textarea>
+                    <label for="floatingTextarea">Causa de la visita</label>
+                  </div>
+                  <div className="mb-4">
+                    <label className="form-label">
                       Fecha del Turno
                     </label>
-                    <DatePicker showTimeSelect selected={startDate} onChange={(date) => setStartDate(date)} />
+                    <DatePicker showTimeSelect selected={startDate} dateFormat="Pp" onChange={(date) => { setStartDate(date) }} />
                   </div>
                   <button type="submit" className="btn btn-primary">
                     Guardar
@@ -161,24 +135,24 @@ const Patients = () => {
           <div className="card">
             <div>
               <h1 className="numbers mb-4">Lista de los Turnos</h1>
-              <table className="table">
+              <table className="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Rango</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Dueño</th>
+                    <th scope="col">Fecha Turno</th>
                   </tr>
                 </thead>
-                <tbody className="">
-                  {datosUsuarios.map((datos) => {
-                    console.log(datos);
+                <tbody className="table-hover">
+                  {datosPacientes.map((datos) => {
+                    // console.log(datos);
                     return (
                       <tr>
-                        <td>{datos.userName}</td>
-                        <td>{datos.email}</td>
-                        <td>{datos.typeProfile}</td>
+                        <td>{datos.patientAnimalName}</td>
+                        <td>{datos.ownerName}</td>
+                        <td>{datos.dateTime}</td>
                         <div className="d-flex align-items-center">
-                          <button type="button" class="btn btn-warning me-2">Editar</button>
+                          <button type="button" className="btn btn-warning me-2">Editar</button>
                           <button
                             type="button"
                             className="btn btn-danger"
@@ -195,6 +169,12 @@ const Patients = () => {
                   })}
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div className="card">
+            <div>
+              <h1 className="numbers mb-4">Perfil de Usuario Seleccionado</h1>
+
             </div>
           </div>
         </div>
