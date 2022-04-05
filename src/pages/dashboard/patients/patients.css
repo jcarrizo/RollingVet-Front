@@ -1,3 +1,7 @@
 .TextArea {
   height: 150px !important;
 }
+
+.pointerHand {
+  cursor: pointer;
+}

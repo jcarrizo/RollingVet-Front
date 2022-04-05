@@ -10,32 +10,43 @@ import "react-datepicker/dist/react-datepicker.css";
 const Patients = () => {
   const { register, handleSubmit } = useForm();
   const [datosPacientes, setdatosPacientes] = useState([]);
+  const [PacienteSeleccion, setPacienteSeleccion] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [startDateEdit, setStartDateEdit] = useState();
+
 
   useEffect(() => {
     ObtenerPacientes();
   }, []);
 
   const onSubmit = (data) => {
+
     data.dateTime = startDate.toLocaleString();
+
     console.log(data)
-    fetch("http://localhost:8000/api/patients", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast("Se cargo el perfil correctamente", {
-          type: "success",
-          autoClose: 3000,
-        });
-        ObtenerPacientes();
-      })
-      .catch((err) => console.error(err));
+
+    // console.log(data)
+    // fetch("http://localhost:8000/api/patients", {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     toast("Se cargo el perfil correctamente", {
+    //       type: "success",
+    //       autoClose: 3000,
+    //     });
+    //     ObtenerPacientes();
+    //     document.getElementById("ButtonGuardar").disabled = true;
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     }, 1500);
+    //   })
+    //   .catch((err) => console.error(err));
   };
 
   const ObtenerPacientes = () => {
@@ -53,14 +64,31 @@ const Patients = () => {
       .catch((err) => console.error(err));
   };
 
-  const EliminarUsuario = (id) => {
-    console.log(id);
-    let data = {
-      id: id,
-    };
 
+  const EditarPaciente = (data) => {
+    document.getElementById("TitlePatient").innerHTML = "Editar Paciente";
+    document.getElementById("floatingInputPatient").value = data.patientAnimalName;
+    document.getElementById("floatingInputOwner").value = data.ownerName;
+    document.getElementById("floatingInputSpecies").value = data.species;
+    document.getElementById("floatingInputRace").value = data.race;
+    document.getElementById("floatingTextarea").value = data.consultation;
+
+    setStartDateEdit(data.dateTime)
+
+    let hola = document.getElementById("DatePicker").value
+
+    console.log(hola)
+  }
+
+
+
+  const EliminarPaciente = (id) => {
+    let data = {
+      _id: id,
+    };
+    // console.log(data);
     if (window.confirm("¿Está seguro que desea eliminar el paciente?")) {
-      fetch("http://localhost:8000/api/user/deleteUser", {
+      fetch("http://localhost:8000/api/patients/deletePatients", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -75,11 +103,11 @@ const Patients = () => {
             autoClose: 3000,
           });
           ObtenerPacientes();
+          window.location.reload();
         })
         .catch((err) => console.error(err));
     }
   };
-
 
   return (
     <div>
@@ -90,48 +118,48 @@ const Patients = () => {
           <h1 className="mt-2 ms-2">Pacientes</h1>
         </div>
         <div className="cardBoxtwo">
+
+          {/*  Nuevo Paciente */}
           <div className="card">
-            <div>
-              <div className="numbers mb-4">Nuevo Paciente</div>
-              <div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="form-floating mb-3">
-                    <input type="text" className="form-control" placeholder="Paciente" id="floatingInputPatient" maxLength={30} {...register("patientAnimalName", { required: true })}
-                      required></input>
-                    <label for="floatingInputPatient">Nombre del Paciente Animal</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input type="text" className="form-control" placeholder="Dueño" id="floatingInputOwner" maxLength={30} {...register("ownerName", { required: true })}
-                      required></input>
-                    <label for="floatingInputOwner">Nombre del Dueño</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input type="text" className="form-control" placeholder="Especie" id="floatingInputSpecies" maxLength={30} {...register("species", { required: true })}
-                      required></input>
-                    <label for="floatingInputSpecies">Especie</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input type="text" className="form-control" placeholder="Especie" id="floatingInputRace" maxLength={30} {...register("race", { required: true })}
-                      required></input>
-                    <label for="floatingInputRace">Raza</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <textarea className="form-control TextArea" placeholder="Leave a comment here" id="floatingTextarea" rows="3" {...register("consultation", { required: true })}></textarea>
-                    <label for="floatingTextarea">Causa de la visita</label>
-                  </div>
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Fecha del Turno
-                    </label>
-                    <DatePicker showTimeSelect selected={startDate} dateFormat="Pp" onChange={(date) => { setStartDate(date) }} />
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Guardar
-                  </button>
-                </form>
+            <h1 className="numbers mb-4" id="TitlePatient">Nuevo Paciente</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" placeholder="Paciente" id="floatingInputPatient" maxLength={30} {...register("patientAnimalName", { required: true })}
+                  required></input>
+                <label for="floatingInputPatient">Nombre del Paciente Animal</label>
               </div>
-            </div>
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" placeholder="Dueño" id="floatingInputOwner" maxLength={30} {...register("ownerName", { required: true })}
+                  required></input>
+                <label for="floatingInputOwner">Nombre del Dueño</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" placeholder="Especie" id="floatingInputSpecies" maxLength={30} {...register("species", { required: true })}
+                  required></input>
+                <label for="floatingInputSpecies">Especie</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" placeholder="Especie" id="floatingInputRace" maxLength={30} {...register("race", { required: true })}
+                  required></input>
+                <label for="floatingInputRace">Raza</label>
+              </div>
+              <div className="form-floating mb-3">
+                <textarea className="form-control TextArea" placeholder="Leave a comment here" id="floatingTextarea" rows="3" {...register("consultation", { required: true })}></textarea>
+                <label for="floatingTextarea">Causa de la visita</label>
+              </div>
+              <div className="mb-4">
+                <label className="form-label">
+                  Fecha del Turno
+                </label>
+                <DatePicker id="DatePicker" showTimeSelect value={startDateEdit} selected={startDate} dateFormat="MM/dd/yyyy h:mm aa" onChange={(date) => { setStartDate(date) }} />
+              </div>
+              <button type="submit" id="ButtonGuardar" className="btn btn-primary">
+                Guardar
+              </button>
+            </form>
           </div>
+
+          {/*  Lista de los Turnos */}
           <div className="card">
             <div>
               <h1 className="numbers mb-4">Lista de los Turnos</h1>
@@ -145,24 +173,19 @@ const Patients = () => {
                 </thead>
                 <tbody className="table-hover">
                   {datosPacientes.map((datos) => {
-                    // console.log(datos);
                     return (
-                      <tr>
+                      <tr className="pointerHand" onClick={() => { setPacienteSeleccion(datos) }}>
                         <td>{datos.patientAnimalName}</td>
                         <td>{datos.ownerName}</td>
                         <td>{datos.dateTime}</td>
                         <div className="d-flex align-items-center">
-                          <button type="button" className="btn btn-warning me-2">Editar</button>
-                          <button
-                            type="button"
-                            className="btn btn-danger"
-                            onClick={() => {
-                              EliminarUsuario(datos._id);
-                            }}
+                          <button type="button" className="btn btn-warning me-2" onClick={() => { EditarPaciente(datos); }}>Editar</button>
+                          <button type="button" className="btn btn-danger" onClick={() => {
+                            EliminarPaciente(datos._id);
+                          }}
                           >
                             Eliminar
                           </button>
-
                         </div>
                       </tr>
                     );
@@ -171,10 +194,69 @@ const Patients = () => {
               </table>
             </div>
           </div>
+
+          {/*  Usuario Seleccionado */}
           <div className="card">
             <div>
               <h1 className="numbers mb-4">Perfil de Usuario Seleccionado</h1>
-
+              <div className="row gutters-sm">
+                <div className="col-md-8">
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Paciente</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary" id="TextPatientAnimalName" >
+                      {PacienteSeleccion.patientAnimalName}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Dueño</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      {PacienteSeleccion.ownerName}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Especie</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      {PacienteSeleccion.species}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Raza</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      {PacienteSeleccion.race}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Fecha Turno</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      {PacienteSeleccion.dateTime}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Razon de la Consulta</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      {PacienteSeleccion.consultation}
+                    </div>
+                  </div>
+                  <hr className="mb-4"></hr>
+                </div>
+              </div>
             </div>
           </div>
         </div>
