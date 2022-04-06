@@ -19,8 +19,9 @@ const Patients = () => {
   }, []);
 
   const onSubmit = (data) => {
-    data.dateTime = new Date(startDate)
-    // console.log(data)
+    data.dateTime = new Date(startDate);
+    data._id = PacienteSeleccion._id;
+    console.log(data)
     // fetch("http://localhost:8000/api/patients", {
     //   method: "POST",
     //   body: JSON.stringify(data),
@@ -42,6 +43,29 @@ const Patients = () => {
     //     }, 1500);
     //   })
     //   .catch((err) => console.error(err));
+
+
+    fetch("http://localhost:8000/api/patients/editPatients", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast("Se cargo el perfil correctamente", {
+          type: "success",
+          autoClose: 3000,
+        });
+        ObtenerPacientes();
+        document.getElementById("ButtonGuardar").disabled = true;
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      })
+      .catch((err) => console.error(err));
   };
 
   const ObtenerPacientes = () => {
