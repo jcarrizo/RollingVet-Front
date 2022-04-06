@@ -12,7 +12,6 @@ const Patients = () => {
   const [datosPacientes, setdatosPacientes] = useState([]);
   const [PacienteSeleccion, setPacienteSeleccion] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [startDateEdit, setStartDateEdit] = useState();
 
 
   useEffect(() => {
@@ -21,11 +20,9 @@ const Patients = () => {
 
   const onSubmit = (data) => {
 
-    data.dateTime = startDate.toLocaleString();
 
+    data.dateTime = startDate.toLocaleString('en-GB')
     console.log(data)
-
-    // console.log(data)
     // fetch("http://localhost:8000/api/patients", {
     //   method: "POST",
     //   body: JSON.stringify(data),
@@ -73,8 +70,8 @@ const Patients = () => {
     document.getElementById("floatingInputRace").value = data.race;
     document.getElementById("floatingTextarea").value = data.consultation;
 
-    setStartDateEdit(data.dateTime)
-
+    setStartDate(Date.parse(data.dateTime))
+    // Flag = true;
     let hola = document.getElementById("DatePicker").value
 
     console.log(hola)
@@ -108,6 +105,10 @@ const Patients = () => {
         .catch((err) => console.error(err));
     }
   };
+
+  const Limpiar = () => {
+    setStartDate(Date.now());
+  }
 
   return (
     <div>
@@ -151,11 +152,16 @@ const Patients = () => {
                 <label className="form-label">
                   Fecha del Turno
                 </label>
-                <DatePicker id="DatePicker" showTimeSelect value={startDateEdit} selected={startDate} dateFormat="MM/dd/yyyy h:mm aa" onChange={(date) => { setStartDate(date) }} />
+                <DatePicker id="DatePicker" showTimeSelect selected={startDate} dateFormat="MM/dd/yyyy h:mm aa" onChange={(date) => { setStartDate(date); console.log(date) }} />
               </div>
-              <button type="submit" id="ButtonGuardar" className="btn btn-primary">
+
+              <button type="submit" id="ButtonGuardar" className="btn btn-primary me-3">
                 Guardar
               </button>
+              <button type="reset" id="ButtonReset" className="btn btn-warning" onClick={() => { Limpiar() }}>
+                Cancelar
+              </button>
+
             </form>
           </div>
 
@@ -173,11 +179,12 @@ const Patients = () => {
                 </thead>
                 <tbody className="table-hover">
                   {datosPacientes.map((datos) => {
+                    let fecha = datos.dateTime;
                     return (
                       <tr className="pointerHand" onClick={() => { setPacienteSeleccion(datos) }}>
                         <td>{datos.patientAnimalName}</td>
                         <td>{datos.ownerName}</td>
-                        <td>{datos.dateTime}</td>
+                        <td>{fecha}</td>
                         <div className="d-flex align-items-center">
                           <button type="button" className="btn btn-warning me-2" onClick={() => { EditarPaciente(datos); }}>Editar</button>
                           <button type="button" className="btn btn-danger" onClick={() => {
@@ -261,7 +268,7 @@ const Patients = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default Patients;
