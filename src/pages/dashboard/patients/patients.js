@@ -19,10 +19,8 @@ const Patients = () => {
   }, []);
 
   const onSubmit = (data) => {
-
-
-    data.dateTime = startDate.toLocaleString('en-GB')
-    console.log(data)
+    data.dateTime = new Date(startDate)
+    // console.log(data)
     // fetch("http://localhost:8000/api/patients", {
     //   method: "POST",
     //   body: JSON.stringify(data),
@@ -69,12 +67,13 @@ const Patients = () => {
     document.getElementById("floatingInputSpecies").value = data.species;
     document.getElementById("floatingInputRace").value = data.race;
     document.getElementById("floatingTextarea").value = data.consultation;
+    let fecha = Date.parse(data.dateTime)
 
-    setStartDate(Date.parse(data.dateTime))
+    setStartDate(fecha)
     // Flag = true;
     let hola = document.getElementById("DatePicker").value
 
-    console.log(hola)
+    // console.log(hola)
   }
 
 
@@ -83,7 +82,6 @@ const Patients = () => {
     let data = {
       _id: id,
     };
-    // console.log(data);
     if (window.confirm("¿Está seguro que desea eliminar el paciente?")) {
       fetch("http://localhost:8000/api/patients/deletePatients", {
         method: "POST",
@@ -152,7 +150,7 @@ const Patients = () => {
                 <label className="form-label">
                   Fecha del Turno
                 </label>
-                <DatePicker id="DatePicker" showTimeSelect selected={startDate} dateFormat="MM/dd/yyyy h:mm aa" onChange={(date) => { setStartDate(date); console.log(date) }} />
+                <DatePicker id="DatePicker" showTimeSelect selected={startDate} dateFormat="dd/MM/yyyy h:mm aa" onChange={(date) => { setStartDate(date); console.log(date) }} />
               </div>
 
               <button type="submit" id="ButtonGuardar" className="btn btn-primary me-3">
@@ -179,12 +177,12 @@ const Patients = () => {
                 </thead>
                 <tbody className="table-hover">
                   {datosPacientes.map((datos) => {
-                    let fecha = datos.dateTime;
+                    let fecha = new Date(datos.dateTime);
                     return (
                       <tr className="pointerHand" onClick={() => { setPacienteSeleccion(datos) }}>
                         <td>{datos.patientAnimalName}</td>
                         <td>{datos.ownerName}</td>
-                        <td>{fecha}</td>
+                        <td>{fecha.toLocaleString('en-GB')}</td>
                         <div className="d-flex align-items-center">
                           <button type="button" className="btn btn-warning me-2" onClick={() => { EditarPaciente(datos); }}>Editar</button>
                           <button type="button" className="btn btn-danger" onClick={() => {
@@ -249,7 +247,9 @@ const Patients = () => {
                       <h6 className="mb-0">Fecha Turno</h6>
                     </div>
                     <div className="col-sm-9 text-secondary">
-                      {PacienteSeleccion.dateTime}
+                      {
+
+                        new Date(PacienteSeleccion.dateTime).toLocaleString('en-GB')}
                     </div>
                   </div>
                   <hr className="mb-4"></hr>
