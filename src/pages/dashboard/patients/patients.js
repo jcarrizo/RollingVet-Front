@@ -6,6 +6,7 @@ import "../registroUser/registroUser.css";
 import "../patients/patients.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import MenuMobile from "../../../components/menumobile/menumobile";
 
 const Patients = () => {
   const { register, handleSubmit } = useForm();
@@ -135,6 +136,7 @@ const Patients = () => {
   return (
     <div>
       <Sidebar />
+      <MenuMobile />
       <div className="maindash">
         <div className="iconPage d-flex align-items-center mt-4 ms-4">
           <ion-icon className="mt-2" name="paw-outline"></ion-icon>
@@ -189,8 +191,8 @@ const Patients = () => {
 
           {/*  Lista de los Turnos */}
           <div className="card">
-            <div>
-              <h1 className="numbers mb-4">Lista de los Turnos</h1>
+            <h1 className="numbers mb-4">Lista de los Turnos</h1>
+            <div className="horizontal-scroll">
               <table className="table table-hover">
                 <thead>
                   <tr>

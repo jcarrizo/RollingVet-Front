@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import MenuMobile from "../../../components/menumobile/menumobile";
 import Sidebar from "../../../components/sidebar/sidebar";
 import "../registroUser/registroUser.css";
 
@@ -76,6 +77,7 @@ const RegistroUser = () => {
   return (
     <div>
       <Sidebar />
+      <MenuMobile />
       <div className="maindash">
         <div className="iconPage d-flex align-items-center mt-4 ms-4">
           <ion-icon className="mt-2" name="person-outline"></ion-icon>
@@ -135,9 +137,9 @@ const RegistroUser = () => {
             </div>
           </div>
           <div className="card">
-            <div>
-              <h1 className="numbers mb-4">Lista de Usuarios</h1>
-              <table className="table">
+            <h1 className="numbers mb-4">Lista de Usuarios</h1>
+            <div className="horizontal-scroll">
+              <table className="table ">
                 <thead>
                   <tr>
                     <th scope="col">Usuario</th>

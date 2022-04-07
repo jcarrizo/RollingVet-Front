@@ -22,7 +22,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="navigation">
+    <div className="navigation MenuEscritorio">
       <ul>
         <img className="ImgLogo" src={LogoR}></img>
         <li>
