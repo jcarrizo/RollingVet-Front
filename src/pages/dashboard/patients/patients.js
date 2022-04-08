@@ -12,61 +12,69 @@ const Patients = () => {
   const { register, handleSubmit } = useForm();
   const [datosPacientes, setdatosPacientes] = useState([]);
   const [PacienteSeleccion, setPacienteSeleccion] = useState([]);
+  const [EditarBool, SetEditarBool] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
 
   useEffect(() => {
     ObtenerPacientes();
+    SetEditarBool(false)
   }, []);
 
   const onSubmit = (data) => {
     data.dateTime = new Date(startDate);
-    data._id = PacienteSeleccion._id;
-    console.log(data)
-    // fetch("http://localhost:8000/api/patients", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     toast("Se cargo el perfil correctamente", {
-    //       type: "success",
-    //       autoClose: 3000,
-    //     });
-    //     ObtenerPacientes();
-    //     document.getElementById("ButtonGuardar").disabled = true;
-    //     setTimeout(() => {
-    //       window.location.reload();
-    //     }, 1500);
-    //   })
-    //   .catch((err) => console.error(err));
-
-
-    fetch("http://localhost:8000/api/patients/editPatients", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast("Se cargo el perfil correctamente", {
-          type: "success",
-          autoClose: 3000,
-        });
-        ObtenerPacientes();
-        document.getElementById("ButtonGuardar").disabled = true;
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+    console.log(EditarBool)
+    if (EditarBool == false) {
+      // console.log("Agregando nuevo")
+      fetch("http://localhost:8000/api/patients", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data) => {
+          toast("Se cargo el perfil correctamente", {
+            type: "success",
+            autoClose: 3000,
+          });
+          ObtenerPacientes();
+          document.getElementById("ButtonGuardar").disabled = true;
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch((err) => console.error(err));
+      SetEditarBool(false)
+
+    } else {
+      // console.log(EditarBool)
+      data._id = PacienteSeleccion._id;
+      fetch("http://localhost:8000/api/patients/editPatients", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          toast("Se cargo el perfil correctamente", {
+            type: "success",
+            autoClose: 3000,
+          });
+          ObtenerPacientes();
+          document.getElementById("ButtonGuardar").disabled = true;
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch((err) => console.error(err));
+    }
+    // console.log(data)
   };
 
   const ObtenerPacientes = () => {
@@ -86,6 +94,7 @@ const Patients = () => {
 
 
   const EditarPaciente = (data) => {
+    SetEditarBool(true)
     document.getElementById("TitlePatient").innerHTML = "Editar Paciente";
     document.getElementById("floatingInputPatient").value = data.patientAnimalName;
     document.getElementById("floatingInputOwner").value = data.ownerName;
@@ -130,7 +139,9 @@ const Patients = () => {
   };
 
   const Limpiar = () => {
+    document.getElementById("TitlePatient").innerHTML = "Nuevo Paciente";
     setStartDate(Date.now());
+    SetEditarBool(false)
   }
 
   return (
