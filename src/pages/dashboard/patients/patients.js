@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Sidebar from "../../../components/sidebar/sidebar";
-import "../registroUser/registroUser.css";
+import "../user/user.css";
 import "../patients/patients.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
