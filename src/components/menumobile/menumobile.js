@@ -1,10 +1,8 @@
-import react from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import LogoR from '../../images/vet-icon-remove.png'
 import "../sidebar/sidebar.css";
 const MenuMobile = () => {
-
-  let userName = localStorage.getItem("UserName");
   const LogOut = () => {
     localStorage.setItem("UserName", "");
     window.history.pushState({}, undefined, "/");
